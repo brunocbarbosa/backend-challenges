@@ -12,6 +12,17 @@ class UrlController{
     })
   }
 
+  async redirectAnotherPage(req: Request, res: Response){
+    const { shorteredUrl } = req.params;
+
+    const urlService = new UrlService();
+
+    const url = await urlService.redirectAnotherPage(shorteredUrl)
+
+    return res.redirect(url)
+
+  }
+
   async create(req: Request, res: Response){
     const { url } = req.body;
 

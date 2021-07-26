@@ -1,5 +1,5 @@
-import knex from '../database/connection';
 import { DateTime } from 'luxon'
+import knex from '../database/connection';
 import { randomUrl } from '../utils/functions'
 
 interface IUrlRequest{
@@ -13,6 +13,19 @@ class UrlService{
       .select('*');
 
     return urls;
+  }
+
+  async redirectAnotherPage(shortUrl: string){
+    const url = await knex('url_shortener')
+      .where('shortened', shortUrl)
+      .select('url', 'expired_at')
+      .first()
+
+    const date = DateTime.now().toISODate()
+
+    if(url.expired_at <= date) throw new Error('Erro 404: Link expirado')
+
+    return url.url;
   }
   
   async create({ url }: IUrlRequest){
