@@ -7,18 +7,19 @@ interface IUrlRequest{
 }
 
 class UrlService{
+
+  async getAll(){
+    const urls = await knex('url_shortener')
+      .select('*');
+
+    return urls;
+  }
   
   async create({ url }: IUrlRequest){
     
     const trx = await knex.transaction();
 
     const shortened = randomUrl(5, 10);
-
-    console.log("shortened: ",shortened);
-
-    // const expired_at = DateTime.local().plus({days:3})
-
-    // console.log("expired_at: ",expired_at);
     
     const urlConverter = await trx('url_shortener').insert({
       url,

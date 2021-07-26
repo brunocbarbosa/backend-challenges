@@ -6,5 +6,6 @@ const router = Router();
 const urlController = new UrlController();
 
 router.post('/urlshortened', urlController.create);
+router.get('/urlshortened', urlController.getAll);
 
 export { router }
