@@ -34,6 +34,18 @@ class UrlController{
       message: "Url shorter created successful!!"
     })
   }
+
+  async renewShortUrl(req: Request, res: Response){
+    const { url } = req.body;
+
+    const urlService = new UrlService();
+
+    const urlConverted = await urlService.renewShortUrl({url});
+
+    return res.json({
+      message: 'Url renewed!!'
+    })
+  }
 }
 
 export { UrlController }

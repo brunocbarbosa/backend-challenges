@@ -11,6 +11,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('url').notNullable();
     table.string('shortened').notNullable();
     table.timestamp('created_at').defaultTo(created);
+    table.timestamp('updated_at').nullable();
     table.timestamp('expired_at').defaultTo(expired);
   });
 }
