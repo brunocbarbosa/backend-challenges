@@ -36,11 +36,12 @@ class UrlController{
   }
 
   async renewShortUrl(req: Request, res: Response){
-    const { url } = req.body;
-
+    const {url} = req.body;
+    const {id} = req.params
+    
     const urlService = new UrlService();
 
-    const urlConverted = await urlService.renewShortUrl({url});
+    const urlConverted = await urlService.renewShortUrl({url, id});
 
     return res.json({
       message: 'Url renewed!!'

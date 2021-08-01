@@ -4,6 +4,7 @@ import { randomUrl } from '../utils/functions'
 
 interface IUrlRequest{
   url: string;
+  id?: string;
 }
 
 class UrlService{
@@ -50,15 +51,15 @@ class UrlService{
     return urlConverter
   }
 
-  async renewShortUrl({url}: IUrlRequest){
+  async renewShortUrl({url, id}: IUrlRequest){
     const existsQuery = await knex('url_shortener')
-      .where('url', url)
-      .select('id','url', 'expired_at')
+      .where('id', id)
+      .select('id', 'expired_at')
       .first()
 
     const today = DateTime.now().toISODate()
 
-    if(!existsQuery.url) throw new Error("Url doesn't exists!!")
+    if(!existsQuery.id) throw new Error("Url doesn't exists!!")
     if(existsQuery.expired_at > today) throw new Error("Url not expired!!")
 
       
